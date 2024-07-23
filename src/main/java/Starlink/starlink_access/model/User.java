@@ -31,9 +31,6 @@ public class User {
     private String password;
 
     @Column(nullable = false)
-    private String role;
-
-    @Column(nullable = false)
     @Email(message = "Email should be valid")
     private String email;
 
@@ -46,4 +43,11 @@ public class User {
     @OneToMany(mappedBy = "user")
     private List<Statistic> statistics;
 
+
+    @Enumerated(EnumType.STRING)
+    private Role role;
+
+    public enum Role {
+        USER, ADMIN
+    }
 }

@@ -5,10 +5,13 @@ import Starlink.starlink_access.model.User;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import java.math.BigDecimal;
+
 public interface UserService {
-    UserDTO create(UserDTO productDTO);
-    Page<UserDTO> getAll(Pageable pageable, UserDTO productDTO);
-    UserDTO update(Long id, UserDTO productDTO);
-    void delete (Long id);
+    UserDTO getUserProfile(Long userId);
+    UserDTO updateUserProfile(Long userId, UserDTO userDto);
+    Page<UserDTO> getAllUsers(Pageable pageable);
+    UserDTO getUserById(Long userId);
+    Long getUserIdByUsername(String username);
 }
 

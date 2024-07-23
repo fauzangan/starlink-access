@@ -1,7 +1,6 @@
 package Starlink.starlink_access.service;
 
 import Starlink.starlink_access.DTO.DiscountDTO;
-import Starlink.starlink_access.model.Discount;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
