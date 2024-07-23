@@ -44,7 +44,6 @@ public class User {
     private String birthDate;
 
     @OneToMany(mappedBy = "user")
-    private List<ServiceDetail> serviceDetails;
-
+    private List<Statistic> statistics;
 
 }

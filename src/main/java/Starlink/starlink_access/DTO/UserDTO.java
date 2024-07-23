@@ -1,6 +1,6 @@
 package Starlink.starlink_access.DTO;
 
-import Starlink.starlink_access.model.ServiceDetail;
+import Starlink.starlink_access.model.Statistic;
 import Starlink.starlink_access.validator.Lowercase;
 import Starlink.starlink_access.validator.Password;
 import jakarta.persistence.Column;
@@ -34,5 +34,5 @@ public class UserDTO {
     @Column(nullable = false)
     private String birthDate;
 
-    private List<ServiceDetail> serviceDetails;
+    private List<Statistic> statistics;
 }
