@@ -10,6 +10,7 @@ public class ProductMapper {
                 .name(product.getName())
                 .price(product.getPrice())
                 .stock(product.getStock())
+                .picture_source(product.getPicture_source())
                 .productCategory(ProductCategoryMapper.map(product.getProductCategory()))
                 .build();
     }
@@ -20,6 +21,7 @@ public class ProductMapper {
                 .name(productDTO.getName())
                 .price(productDTO.getPrice())
                 .stock(productDTO.getStock())
+                .picture_source(productDTO.getPicture_source())
                 .productCategory(ProductCategoryMapper.map(productDTO.getProductCategory()))
                 .build();
     }

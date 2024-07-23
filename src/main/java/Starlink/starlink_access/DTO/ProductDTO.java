@@ -11,7 +11,6 @@ public class ProductDTO {
 
     private ProductCategoryDTO productCategory;
 
-
     private String name;
 
 
@@ -19,4 +18,5 @@ public class ProductDTO {
 
 
     private Long stock;
+    private String picture_source;
 }

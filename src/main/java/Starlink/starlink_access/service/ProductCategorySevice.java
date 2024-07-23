@@ -6,10 +6,10 @@ import Starlink.starlink_access.model.ProductCategory;
 import java.util.List;
 
 public interface ProductCategorySevice {
-ProductCategoryDTO create(String name);
-List<ProductCategoryDTO> getAll();
+ProductCategoryDTO create(ProductCategoryDTO request);
+List<ProductCategory> getAll();
 ProductCategoryDTO getOne(Long id);
-ProductCategoryDTO update(Long id, String name);
+ProductCategoryDTO update(Long id, ProductCategoryDTO request);
 void delete(Long id);
 
 }
