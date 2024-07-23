@@ -1,9 +1,12 @@
 package Starlink.starlink_access.DTO;
 
 import Starlink.starlink_access.model.Statistic;
+import Starlink.starlink_access.model.User;
 import Starlink.starlink_access.validator.Lowercase;
 import Starlink.starlink_access.validator.Password;
 import jakarta.persistence.Column;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.OneToMany;
 import jakarta.validation.constraints.Email;
 import lombok.Builder;
@@ -23,7 +26,8 @@ public class UserDTO {
     @Password
     private String password;
 
-    private String role;
+    @Enumerated(EnumType.STRING)
+    private User.Role role;
 
     @Email(message = "Email should be valid")
     private String email;
