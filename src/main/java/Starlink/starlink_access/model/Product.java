@@ -31,4 +31,7 @@ public class Product {
 
     @Column(nullable = false)
     private Long stock;
+
+    @Column(name = "pitcure_source", nullable = true)
+    private String picture_source;
 }
