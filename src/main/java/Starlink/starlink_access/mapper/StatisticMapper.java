@@ -1,5 +1,8 @@
 package Starlink.starlink_access.mapper;
 
+import Starlink.starlink_access.DTO.StatisticDTO;
+import Starlink.starlink_access.model.Statistic;
+
 public class StatisticMapper {
 //    public static StatisticDTO map(Statistic statistic) {
 //        return StatisticDTO.builder()
