@@ -1,25 +1,16 @@
-package Starlink.starlink_access.model;
+package Starlink.starlink_access.DTO;
 
+import Starlink.starlink_access.model.Statistic;
 import Starlink.starlink_access.validator.Lowercase;
 import Starlink.starlink_access.validator.Password;
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.OneToMany;
 import jakarta.validation.constraints.Email;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import java.util.List;
 
-@Data
-@Builder
-@Entity
-@Table(name = "users")
-@NoArgsConstructor
-@AllArgsConstructor
-public class User {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class UserDTO {
+
     private Long id;
 
     @Column(nullable = false)
@@ -43,7 +34,5 @@ public class User {
     @Column(nullable = false)
     private String birthDate;
 
-    @OneToMany(mappedBy = "user")
     private List<Statistic> statistics;
-
 }
