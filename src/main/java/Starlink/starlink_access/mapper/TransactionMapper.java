@@ -21,7 +21,7 @@ public class TransactionMapper {
                 .is_settled(transaction.getIs_settled())
                 .user_id(transaction.getUser().getId())
                 .discount(transaction.getDiscount().getPercentage())
-                .products(transaction.getProductLists().stream()
+                .productLists(transaction.getProductLists().stream()
                         .map(productList -> ProductListDTO.builder()
                                 .id(productList.getId())
                                 .product_id(productList.getProduct().getId())

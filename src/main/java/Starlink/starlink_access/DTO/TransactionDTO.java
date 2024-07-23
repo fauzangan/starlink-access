@@ -4,6 +4,8 @@ import Starlink.starlink_access.model.Discount;
 import Starlink.starlink_access.model.Product;
 import lombok.*;
 
+import java.util.List;
+
 @Setter
 @Getter
 @Builder
@@ -16,15 +18,17 @@ public class TransactionDTO {
 
     private Long total_price;
 
-    private Long created_at;
+    private String created_at;
 
-    private Long updated_at;
+    private String updated_at;
 
-    private Long expired_date;
+    private String expired_date;
 
-    private StatisticDTO serviceDetail;
+    private Boolean is_settled;
 
-    private Long product;
+    private Long user_id;
 
-    private Long discount;
+    private List<ProductListDTO> productLists;
+
+    private Integer discount;
 }
