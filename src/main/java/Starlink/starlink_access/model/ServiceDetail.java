@@ -18,7 +18,7 @@ public class ServiceDetail {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "user_id",nullable = false)
+    @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
     private Long quota;
