@@ -13,25 +13,18 @@ public class UserDTO {
 
     private Long id;
 
-    @Column(nullable = false)
     @Lowercase
     private String username;
 
-    @Column(nullable = false)
     @Password
     private String password;
 
-    @Column(nullable = false)
     private String role;
-
-    @Column(nullable = false)
     @Email(message = "Email should be valid")
     private String email;
 
-    @Column(nullable = false)
     private String name;
 
-    @Column(nullable = false)
     private String birthDate;
 
     private List<Statistic> statistics;
