@@ -6,14 +6,11 @@ import jakarta.persistence.Column;
 import java.time.LocalDate;
 
 public class ServiceDetailDTO {
-    @Column(nullable = false)
     private Long user_id;
 
     private UserDTO user;
 
-    @Column(nullable = false)
     private Long quota;
 
-    @Column(nullable = false)
     private LocalDate expiredDate;
 }

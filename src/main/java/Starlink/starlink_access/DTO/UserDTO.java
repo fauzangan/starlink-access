@@ -20,6 +20,7 @@ public class UserDTO {
     private String password;
 
     private String role;
+
     @Email(message = "Email should be valid")
     private String email;
 
