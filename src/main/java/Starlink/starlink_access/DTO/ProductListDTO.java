@@ -6,16 +6,17 @@ import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Data;
 
-@Data
+import lombok.*;
+
+@Setter
+@Getter
 @Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class ProductListDTO {
     private Long id;
-
     private Integer price;
-
     private Integer quantity;
-
-    private ProductDTO product;
-
-    private Transaction transaction;
+    private Long product_id;
+    private Long transaction_id;
 }

@@ -6,6 +6,9 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Data
 @Builder
 @Entity
@@ -29,11 +32,14 @@ public class Transaction {
 
     private Boolean is_settled;
 
-    @JoinColumn(name = "service_detail_id",nullable = false)
+    @JoinColumn(name = "user_id",nullable = false)
     @ManyToOne
-    private Statistic serviceDetail;
+    private User user;
 
     @JoinColumn(name = "discount_id",nullable = false)
     @ManyToOne
     private Discount discount;
+
+    @OneToMany(mappedBy = "transaction")
+    private List<ProductList> productLists = new ArrayList<>();
 }
