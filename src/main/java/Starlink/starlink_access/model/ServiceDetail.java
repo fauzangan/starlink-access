@@ -1,11 +1,17 @@
 package Starlink.starlink_access.model;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
 @Builder
+@Entity
+@Table(name = "service_detail")
+@AllArgsConstructor
+@NoArgsConstructor
 public class ServiceDetail {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
