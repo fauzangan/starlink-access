@@ -1,13 +1,19 @@
 package Starlink.starlink_access.service.implementation;
 
+import Starlink.starlink_access.DTO.ProductDTO;
+import Starlink.starlink_access.DTO.ProductListDTO;
 import Starlink.starlink_access.DTO.TransactionDTO;
+import Starlink.starlink_access.mapper.TransactionMapper;
+import Starlink.starlink_access.model.Transaction;
 import Starlink.starlink_access.repository.TransactionRepository;
 import Starlink.starlink_access.service.TransactionService;
+import Starlink.starlink_access.utils.DateFormatter;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -19,12 +25,15 @@ public class TransactionServiceImplement implements TransactionService {
     @Override
     @Transactional(rollbackOn = Exception.class)
     public TransactionDTO create(TransactionDTO request) throws Exception{
+
         return null;
     }
 
     @Override
     public List<TransactionDTO> getAll() {
-        return List.of();
+        List<Transaction> transactions = transactionRepository.findAll();
+
+        return transactions.stream().map(TransactionMapper::map).collect(Collectors.toList());
     }
 
     @Override

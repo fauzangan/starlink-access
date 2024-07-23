@@ -1,5 +1,8 @@
 package Starlink.starlink_access.mapper;
 
+import Starlink.starlink_access.DTO.UserDTO;
+import Starlink.starlink_access.model.User;
+
 public class UserMapper {
 
     public static UserDTO map(User user) {

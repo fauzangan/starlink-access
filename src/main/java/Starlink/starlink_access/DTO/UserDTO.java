@@ -6,9 +6,15 @@ import Starlink.starlink_access.validator.Password;
 import jakarta.persistence.Column;
 import jakarta.persistence.OneToMany;
 import jakarta.validation.constraints.Email;
+import lombok.*;
 
 import java.util.List;
 
+@Setter
+@Getter
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class UserDTO {
 
     private Long id;
