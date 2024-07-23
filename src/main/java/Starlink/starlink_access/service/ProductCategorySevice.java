@@ -8,6 +8,7 @@ public interface ProductCategorySevice {
 ProductCategory create(String name);
 List<ProductCategory> getAll();
 ProductCategory getOne(Long id);
+ProductCategory update(Long id, String name);
 void delete(Long id);
 
 }
