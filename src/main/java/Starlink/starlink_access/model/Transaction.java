@@ -21,7 +21,9 @@ public class Transaction {
 
     private Long total_price;
 
-    private Long transaction_date;
+    private Long created_at;
+
+    private Long updated_at;
 
     private Long expired_date;
 
