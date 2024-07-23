@@ -7,7 +7,7 @@ import java.util.List;
 public interface TransactionService {
     TransactionDTO create(TransactionDTO request) throws Exception;
     List<TransactionDTO> getAll();
-    TransactionDTO getTransactionById(Integer id);
-    TransactionDTO update(Integer id, TransactionDTO request);
-    void delete(Integer id);
+    TransactionDTO getTransactionById(Long id);
+    TransactionDTO update(Long id, TransactionDTO request);
+    void delete(Long id);
 }

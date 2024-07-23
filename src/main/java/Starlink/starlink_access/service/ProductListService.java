@@ -8,7 +8,8 @@ import org.springframework.data.domain.Pageable;
 
 public interface ProductListService {
     ProductListDTO create(ProductListDTO productDTO);
-    Page<ProductListDTO> getAll(Pageable pageable, ProductListDTO productListDTO);
+    Page<ProductList> getAll(Pageable pageable, ProductListDTO productListDTO);
+    ProductListDTO getOne(Long id);
     ProductListDTO update(Long id, ProductListDTO productlistDTO);
-    void delete (Long id);
+    void delete(Long id);
 }
