@@ -3,11 +3,13 @@ package Starlink.starlink_access.DTO;
 import Starlink.starlink_access.model.User;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import lombok.Builder;
-import lombok.Data;
+import lombok.*;
 
-@Data
+@Setter
+@Getter
 @Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class StatisticDTO {
     private Long id;
 

@@ -10,7 +10,7 @@ public class UserMapper {
                 .id(user.getId())
                 .username(user.getUsername())
                 .password(user.getPassword())
-                .role(user.getRole() )
+                .role(user.getRole())
                 .email(user.getEmail())
                 .name(user.getName())
                 .birthDate(user.getBirthDate())

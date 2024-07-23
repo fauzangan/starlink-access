@@ -2,11 +2,13 @@ package Starlink.starlink_access.DTO;
 
 import Starlink.starlink_access.model.Discount;
 import Starlink.starlink_access.model.Product;
-import lombok.Builder;
-import lombok.Data;
+import lombok.*;
 
+@Setter
+@Getter
 @Builder
-@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class TransactionDTO {
     private Long id;
 
@@ -14,11 +16,15 @@ public class TransactionDTO {
 
     private Long total_price;
 
-    private Long transaction_date;
+    private Long created_at;
+
+    private Long updated_at;
+
+    private Long expired_date;
 
     private StatisticDTO serviceDetail;
 
-    private Product product;
+    private Long product;
 
-    private Discount discount;
+    private Long discount;
 }
