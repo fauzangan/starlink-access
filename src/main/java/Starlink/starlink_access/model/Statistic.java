@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @Table(name = "service_detail")
 @AllArgsConstructor
 @NoArgsConstructor
-public class ServiceDetail {
+public class Statistic {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
