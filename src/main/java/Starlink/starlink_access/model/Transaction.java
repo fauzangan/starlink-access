@@ -23,13 +23,13 @@ public class Transaction {
 
     private Long transaction_date;
 
+    private Long expired_date;
+
+    private Boolean is_settled;
+
     @JoinColumn(name = "service_detail_id",nullable = false)
     @ManyToOne
-    private ServiceDetail serviceDetail;
-
-    @JoinColumn(name = "product_id",nullable = false)
-    @ManyToOne
-    private Product product;
+    private Statistic serviceDetail;
 
     @JoinColumn(name = "discount_id",nullable = false)
     @ManyToOne
