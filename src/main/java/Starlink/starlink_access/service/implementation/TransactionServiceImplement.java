@@ -37,17 +37,18 @@ public class TransactionServiceImplement implements TransactionService {
     }
 
     @Override
-    public TransactionDTO getTransactionById(Long id) {
+    public TransactionDTO getTransactionById(Integer id) {
+        Transaction transaction = transactionRepository.findById(id).orElseThrow(() -> new RuntimeException("Transaction not found"));
+        return TransactionMapper.map(transaction);
+    }
+
+    @Override
+    public TransactionDTO update(Integer id, TransactionDTO request) {
         return null;
     }
 
     @Override
-    public TransactionDTO update(Long id, TransactionDTO request) {
-        return null;
-    }
-
-    @Override
-    public void delete(Long id) {
-
+    public void delete(Integer id) {
+        transactionRepository.deleteById(id);
     }
 }

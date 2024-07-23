@@ -43,10 +43,7 @@ public class TransactionMapper {
 //                .expired_date(DateFormatter.convertStringDateToLong(transactionDTO.getExpired_date()))
 //                .is_settled(transactionDTO.getIs_settled())
 //                .productLists(transactionDTO.getProducts().stream()
-//                        .map(productListDTO -> ProductList.builder()
-//                                .id(productListDTO.getId())
-//                                .product(productListDTO.)
-//                        ).collect(Collectors.toList())
+//                        .map().collect(Collectors.toList())
 //                )
 //                .discount(DiscountMapper.map(transactionDTO.getDiscount()))
 //                .build();

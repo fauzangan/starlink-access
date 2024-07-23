@@ -8,17 +8,17 @@ import org.springframework.data.domain.Pageable;
 public class DiscountServiceImplement implements DiscountService {
 
     @Override
-    public DiscountService create(DiscountDTO productDto) {
+    public DiscountDTO create(DiscountDTO productDto) {
         return null;
     }
 
     @Override
-    public Page<DiscountService> getAll(Pageable pageable, DiscountDTO productDTO) {
+    public Page<DiscountDTO> getAll(Pageable pageable, DiscountDTO productDTO) {
         return null;
     }
 
     @Override
-    public DiscountService update(Long id, DiscountDTO productDto) {
+    public DiscountDTO update(Long id, DiscountDTO productDto) {
         return null;
     }
 

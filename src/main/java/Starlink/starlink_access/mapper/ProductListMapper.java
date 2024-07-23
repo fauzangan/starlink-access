@@ -6,15 +6,15 @@ import Starlink.starlink_access.model.ProductList;
 
 public class ProductListMapper {
 
-//    public static ProductList map(ProductListDTO productListDTO) {
-//        return ProductList.builder()
-//                .id(productListDTO.getId())
-//                .price(productListDTO.getPrice())
-//                .quantity(productListDTO.getQuantity())
+    public static ProductList map(ProductListDTO productListDTO) {
+        return ProductList.builder()
+                .id(productListDTO.getId())
+                .price(productListDTO.getPrice())
+                .quantity(productListDTO.getQuantity())
 //                .product(ProductMapper.map(productListDTO.getProduct_id()))
 //                .transaction(TransactionMapper.map(productListDTO.getTransaction()))
-//                .build();
-//    }
+                .build();
+    }
 //
 //    public static ProductListDTO map(ProductList productList) {
 //        return ProductListDTO.builder()
