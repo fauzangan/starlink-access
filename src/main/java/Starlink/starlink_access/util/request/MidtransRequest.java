@@ -12,6 +12,5 @@ import java.util.Map;
 public class MidtransRequest {
     private String payment_type;
     private Map<String, Object> transaction_details;
-    private Map<String, Object> item_details;
-    private Map<String, Object> customer_details;
+    private Map<String, Object> bank_transfer;
 }

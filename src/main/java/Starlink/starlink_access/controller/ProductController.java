@@ -1,8 +1,7 @@
 package Starlink.starlink_access.controller;
-import Starlink.starlink_access.DTO.ProductCategoryDTO;
 import Starlink.starlink_access.DTO.ProductDTO;
 import Starlink.starlink_access.service.ProductSevice;
-import Starlink.starlink_access.util.Response.Response;
+import Starlink.starlink_access.util.response.Response;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;

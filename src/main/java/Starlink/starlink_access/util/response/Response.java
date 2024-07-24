@@ -1,4 +1,4 @@
-package Starlink.starlink_access.util.Response;
+package Starlink.starlink_access.util.response;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
