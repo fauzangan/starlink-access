@@ -34,7 +34,5 @@ public class UserDTO {
 
     private String name;
 
-    private String birthDate;
-
     private List<Statistic> statistics;
 }

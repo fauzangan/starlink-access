@@ -34,11 +34,8 @@ public class User {
     @Email(message = "Email should be valid")
     private String email;
 
-    @Column(nullable = false)
     private String name;
 
-    @Column(nullable = false)
-    private String birthDate;
 
     @OneToMany(mappedBy = "user")
     private List<Statistic> statistics;
