@@ -36,7 +36,7 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .authorizeRequests(authz -> authz
-                        .requestMatchers("/api/auth/**").permitAll()
+//                        .requestMatchers("/api/auth/**").permitAll()
 //                        .requestMatchers(HttpMethod.GET, "/api/products/**").permitAll()
 //                        .requestMatchers("/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html").permitAll()
 //                        .requestMatchers(HttpMethod.POST, "/api/products").hasRole("ADMIN")
@@ -47,6 +47,7 @@ public class SecurityConfig {
 //                        .requestMatchers("/api/cart/**").authenticated()
 //                        .requestMatchers("/api/transactions/**").authenticated()
 //                        .anyRequest().authenticated()
+                                .anyRequest().permitAll()
                 )
                 .sessionManagement(session -> session
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS)

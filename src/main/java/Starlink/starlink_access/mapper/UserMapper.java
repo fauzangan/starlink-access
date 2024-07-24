@@ -13,7 +13,6 @@ public class UserMapper {
                 .role(User.Role.valueOf(user.getRole().name()))
                 .email(user.getEmail())
                 .name(user.getName())
-                .birthDate(user.getBirthDate())
                 .build();
     }
 
@@ -25,7 +24,6 @@ public class UserMapper {
                 .role(User.Role.valueOf(userDTO.getRole().name()))
                 .email(userDTO.getEmail())
                 .name(userDTO.getName())
-                .birthDate(userDTO.getBirthDate())
                 .build();
     }
 }
