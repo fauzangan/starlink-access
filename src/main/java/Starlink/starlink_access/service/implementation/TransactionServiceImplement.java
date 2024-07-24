@@ -44,6 +44,7 @@ public class TransactionServiceImplement implements TransactionService {
         transactionRepository.save(transaction);
 
         for (var productList : request.getProductLists()){
+            productList.setTransaction_id(transaction.getId());
             productListServiceImplement.create(productList);
         }
 
