@@ -12,10 +12,12 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
+
 @Service
 @RequiredArgsConstructor
 public class ProductServiceImplement implements ProductSevice {
     private final ProductRepository productRepository;
+
 
     @Override
     public ProductDTO create(ProductDTO productDTO) {
@@ -52,6 +54,8 @@ public class ProductServiceImplement implements ProductSevice {
 
     @Override
     public void delete(Long id) {
-
+        Product delete = ProductMapper.map(getOne(id));
+        productRepository.delete(delete);
     }
+
 }

@@ -1,6 +1,7 @@
 package Starlink.starlink_access.controller;
 import Starlink.starlink_access.DTO.ProductCategoryDTO;
 import Starlink.starlink_access.DTO.ProductDTO;
+import Starlink.starlink_access.service.CloudinaryService;
 import Starlink.starlink_access.service.ProductSevice;
 import Starlink.starlink_access.util.Response.Response;
 import jakarta.validation.Valid;
@@ -11,6 +12,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.File;
+import java.io.IOException;
 
 
 @RestController
@@ -19,6 +24,7 @@ import org.springframework.web.bind.annotation.*;
 @Validated
 public class ProductController {
     private final ProductSevice productSevice;
+    private final CloudinaryService cloudinaryService;
 
     @PostMapping
     public ResponseEntity<?> create (@Valid @RequestBody ProductDTO request){
@@ -63,5 +69,21 @@ public class ProductController {
                 HttpStatus.OK
         );
     }
+
+    @PostMapping("/{id}/uploadimg")
+    public ResponseEntity<?> uploadImg (
+            @PathVariable("id") Long id,
+            @RequestParam("file") MultipartFile file,
+            @RequestParam("fileName") String fileName
+    ){
+        String url = cloudinaryService.uploadImg(file,fileName);
+        return Response.renderJSON(
+                cloudinaryService.uploadImg(file,fileName),
+                "Success upload Image",
+                HttpStatus.OK
+        );
+    }
+
+
 
 }
