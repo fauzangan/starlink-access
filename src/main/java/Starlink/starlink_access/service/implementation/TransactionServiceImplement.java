@@ -45,7 +45,13 @@ public class TransactionServiceImplement implements TransactionService {
 
         for (var productList : request.getProductLists()){
             productList.setTransaction_id(transaction.getId());
-            productListServiceImplement.create(productList);
+
+            try {
+                productListServiceImplement.create(productList);
+            } catch (Exception e){
+                throw new RuntimeException("Failed creating product list, rollback transaction");
+            }
+            
         }
 
         return TransactionMapper.map(transaction);
