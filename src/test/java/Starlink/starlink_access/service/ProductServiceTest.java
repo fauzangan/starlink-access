@@ -56,11 +56,35 @@ public class ProductServiceTest {
 
     @DisplayName("JUnit test for Create Product")
     @Test
-    public void givenProductDTO_whenSave_thenSave() {
+    public void givenProductDTO_whenSave_thenSuccesSave() {
         given(productRepository.save(Mockito.any(Product.class))).willReturn(any(Product.class));
 
         Product product = ProductMapper.map(productSevice.create(productDTO));
         assertNotNull(product);
         verify(productRepository, times(1)).save(any(Product.class));
     }
+    @DisplayName("JUnit test for Get All Product")
+    @Test
+    public void getAllProduct_succes(){
+
+    }
+
+    @DisplayName("JUnit test for Get the Product")
+    @Test
+    public void getTheProduct_succes(){
+
+    }
+
+    @DisplayName("JUnit test for Update the Product")
+    @Test
+    public void UpdateTheProduct_succes(){
+
+    }
+
+    @DisplayName("JUnit test for Delete the Product")
+    @Test
+    public void deleteTheProduct_succes(){
+
+    }
+
 }
