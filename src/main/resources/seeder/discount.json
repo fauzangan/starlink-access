@@ -1,0 +1,27 @@
+[
+  {
+    "id": 1,
+    "name": "Discount 1",
+    "percentage": 10
+  },
+  {
+    "id": 2,
+    "name": "Discount 2",
+    "percentage": 20
+  },
+  {
+    "id": 3,
+    "name": "Discount 3",
+    "percentage": 30
+  },
+  {
+    "id": 4,
+    "name": "Discount 4",
+    "percentage": 40
+  },
+  {
+    "id": 5,
+    "name": "Discount 5",
+    "percentage": 50
+  }
+]

@@ -1,0 +1,57 @@
+[
+  {
+    "id": 1,
+    "product": {
+      "id": 1
+    },
+    "transaction": {
+      "id": 1
+    },
+    "quantity": 2,
+    "price": 200
+  },
+  {
+    "id": 2,
+    "product": {
+      "id": 2
+    },
+    "transaction": {
+      "id": 2
+    },
+    "quantity": 3,
+    "price": 300
+  },
+  {
+    "id": 3,
+    "product": {
+      "id": 3
+    },
+    "transaction": {
+      "id": 3
+    },
+    "quantity": 4,
+    "price": 400
+  },
+  {
+    "id": 4,
+    "product": {
+      "id": 4
+    },
+    "transaction": {
+      "id": 4
+    },
+    "quantity": 5,
+    "price": 500
+  },
+  {
+    "id": 5,
+    "product": {
+      "id": 5
+    },
+    "transaction": {
+      "id": 5
+    },
+    "quantity": 6,
+    "price": 600
+  }
+]

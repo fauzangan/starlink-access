@@ -1,0 +1,42 @@
+[
+  {
+    "name": "User 1",
+    "username": "user1",
+    "password": "pass1",
+    "role": "USER",
+    "email": "email1@exmaple.com",
+    "birthDate": 1
+  },
+  {
+    "name": "User 2",
+    "username": "user2",
+    "password": "pass2",
+    "role": "USER",
+    "email": "email2@exmaple.com",
+    "birthDate": 2
+  },
+  {
+    "name": "User 3",
+    "username": "user3",
+    "password": "pass3",
+    "role": "USER",
+    "email": "email3@exmaple.com",
+    "birthDate": 3
+  },
+  {
+    "name": "User 4",
+    "username": "user4",
+    "password": "pass4",
+    "role": "USER",
+    "email": "email4@exmaple.com",
+    "birthDate": 4
+  },
+  {
+    "name": "User 5",
+    "username": "user5",
+    "password": "pass5",
+    "role": "USER",
+    "email": "email5@exmaple.com",
+    "birthDate": 5
+  }
+]

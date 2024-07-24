@@ -1,0 +1,77 @@
+[
+  {
+    "id": 1,
+    "quantity": 10,
+    "total_price": 100,
+    "created_at": 10,
+    "updated_at": 10,
+    "expired_date": 10,
+    "is_settled": true,
+    "user": {
+      "id": 1
+    },
+    "discount": {
+      "id": 1
+    }
+  },
+  {
+    "id": 2,
+    "quantity": 20,
+    "total_price": 200,
+    "created_at": 20,
+    "updated_at": 20,
+    "expired_date": 20,
+    "is_settled": false,
+    "user": {
+      "id": 2
+    },
+    "discount": {
+      "id": 2
+    }
+  },
+  {
+    "id": 3,
+    "quantity": 30,
+    "total_price": 300,
+    "created_at": 30,
+    "updated_at": 30,
+    "expired_date": 30,
+    "is_settled": true,
+    "user": {
+      "id": 3
+    },
+    "discount": {
+      "id": 3
+    }
+  },
+  {
+    "id": 4,
+    "quantity": 40,
+    "total_price": 400,
+    "created_at": 40,
+    "updated_at": 40,
+    "expired_date": 40,
+    "is_settled": false,
+    "user": {
+      "id": 4
+    },
+    "discount": {
+      "id": 4
+    }
+  },
+  {
+    "id": 5,
+    "quantity": 50,
+    "total_price": 500,
+    "created_at": 50,
+    "updated_at": 50,
+    "expired_date": 50,
+    "is_settled": true,
+    "user": {
+      "id": 5
+    },
+    "discount": {
+      "id": 5
+    }
+  }
+]

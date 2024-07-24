@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @Data
 @Builder
 @Entity
-@Table(name = "service_detail")
+@Table(name = "product_lists")
 @AllArgsConstructor
 @NoArgsConstructor
 public class ProductList {
