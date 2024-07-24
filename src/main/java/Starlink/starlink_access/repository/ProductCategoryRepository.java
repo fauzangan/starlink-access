@@ -9,5 +9,5 @@ import java.util.Optional;
 @Repository
 public interface ProductCategoryRepository extends JpaRepository<ProductCategory, Long> {
     @Override
-    Optional<ProductCategory> findById(Long aLong);
+    Optional<ProductCategory> findById(Long id);
 }
