@@ -10,7 +10,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/v1/admin/productcategory")
+@RequestMapping("/api/admin/product-categories")
 @RequiredArgsConstructor
 @Validated
 public class ProductCategoryController {
