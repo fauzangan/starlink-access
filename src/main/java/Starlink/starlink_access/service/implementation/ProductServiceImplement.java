@@ -68,6 +68,9 @@ public class ProductServiceImplement implements ProductSevice {
 
     @Override
     public void delete(Long id) {
+        Product delete = ProductMapper.map(getOne(id));
+        productRepository.delete(delete);
+
 
     }
     public void uploadImage(MultipartFile file,Long id){
