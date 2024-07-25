@@ -21,8 +21,8 @@ public class DiscountServiceImplementation implements DiscountService {
     private final DiscountRepository discountRepository;
 
     @Override
-    public DiscountDTO create(DiscountDTO discountDTO) {
-        Discount discount = DiscountMapper.map(discountDTO);
+    public DiscountDTO create(DiscountDTO request) {
+        Discount discount = DiscountMapper.map(request);
         Discount saved = discountRepository.save(discount);
         return DiscountMapper.map(saved);
     }
