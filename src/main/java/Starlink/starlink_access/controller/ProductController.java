@@ -13,14 +13,14 @@ import org.springframework.web.bind.annotation.*;
 
 
 @RestController
-@RequestMapping("/api/v1/admin/product")
+@RequestMapping("/api/admin/products")
 @RequiredArgsConstructor
 @Validated
 public class ProductController {
     private final ProductSevice productSevice;
 
     @PostMapping
-    public ResponseEntity<?> create (@Valid @RequestBody ProductDTO request){
+    public ResponseEntity<?> create (@RequestBody ProductDTO request){
         return Response.renderJSON(
                 productSevice.create(request),
                 "Product created",
