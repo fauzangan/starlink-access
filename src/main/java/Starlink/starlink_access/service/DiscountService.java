@@ -7,7 +7,7 @@ import org.springframework.data.domain.Pageable;
 import java.util.List;
 
 public interface DiscountService {
-    DiscountDTO create(DiscountDTO discountDTO);
+    DiscountDTO create(DiscountDTO request);
     Page<DiscountDTO> getAll(Pageable pageable, String name, Integer percentage);
     DiscountDTO getById(Long id);
     DiscountDTO update(Long id, DiscountDTO discountDTO);

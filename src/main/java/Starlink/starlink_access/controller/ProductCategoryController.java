@@ -1,8 +1,7 @@
 package Starlink.starlink_access.controller;
 import Starlink.starlink_access.DTO.ProductCategoryDTO;
-import Starlink.starlink_access.DTO.ProductDTO;
 import Starlink.starlink_access.service.ProductCategorySevice;
-import Starlink.starlink_access.util.Response.Response;
+import Starlink.starlink_access.util.response.Response;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -11,7 +10,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/v1/admin/productcategory")
+@RequestMapping("/api/admin/product-categories")
 @RequiredArgsConstructor
 @Validated
 public class ProductCategoryController {

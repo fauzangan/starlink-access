@@ -1,4 +1,4 @@
-package Starlink.starlink_access.util.Response;
+package Starlink.starlink_access.util.response;
 
 import lombok.Builder;
 import lombok.Getter;
