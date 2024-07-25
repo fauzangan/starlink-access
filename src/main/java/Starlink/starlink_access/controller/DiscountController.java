@@ -1,5 +1,6 @@
 package Starlink.starlink_access.controller;
 
+
 import Starlink.starlink_access.DTO.DiscountDTO;
 import Starlink.starlink_access.model.Discount;
 import Starlink.starlink_access.service.DiscountService;
@@ -16,15 +17,15 @@ import java.util.Optional;
 
 @Validated
 @RestController
-@RequestMapping("/discounts")
+@RequestMapping("/api/admin/discounts")
 @RequiredArgsConstructor
 public class DiscountController {
     private final DiscountService discountService;
 
     @PostMapping
-    public ResponseEntity<DiscountDTO> create(@Valid @RequestBody DiscountDTO request){
+    public ResponseEntity<?> create(@Valid @RequestBody DiscountDTO request){
         DiscountDTO createdDiscount = discountService.create(request);
-        return ResponseEntity.status(HttpStatus.CREATED).body(createdDiscount);
+        return ResponseEntity.ok(createdDiscount);
     }
 
     @GetMapping
