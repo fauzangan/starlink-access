@@ -19,7 +19,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 
 @RestController
-@RequestMapping("/api/v1/admin/product")
+@RequestMapping("/api/admin/products")
 @RequiredArgsConstructor
 @Validated
 public class ProductController {
