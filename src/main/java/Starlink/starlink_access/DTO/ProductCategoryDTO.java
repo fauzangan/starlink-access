@@ -1,12 +1,13 @@
 package Starlink.starlink_access.DTO;
 
-import lombok.*;
+import lombok.Builder;
+import lombok.Data;
 
 @Data
 @Builder
-@AllArgsConstructor
-@NoArgsConstructor
+
 public class ProductCategoryDTO {
+
     private Long id;
 
     private String name;

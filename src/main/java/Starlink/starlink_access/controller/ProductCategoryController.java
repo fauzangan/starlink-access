@@ -15,8 +15,9 @@ import org.springframework.web.bind.annotation.*;
 @Validated
 public class ProductCategoryController {
     private final ProductCategorySevice productCategorySevice;
+
     @PostMapping
-    public ResponseEntity<?> create (@Valid @RequestBody ProductCategoryDTO request){
+    public ResponseEntity<?> create (@RequestBody String request){
         return Response.renderJSON(
                 productCategorySevice.create(request),
                 "Product created",
@@ -42,8 +43,8 @@ public class ProductCategoryController {
         );
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<?> update(@PathVariable Long id,@RequestBody ProductCategoryDTO request){
+    @PostMapping("/{id}")
+    public ResponseEntity<?> update(@PathVariable Long id,@RequestBody String request){
         return Response.renderJSON(
                 productCategorySevice.update(id,request),
                 "Category Updated",

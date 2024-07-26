@@ -15,10 +15,12 @@ public class ProductCategoryImplement implements ProductCategorySevice {
     private final ProductCategoryRepository productCategoryRepository;
 
     @Override
-    public ProductCategoryDTO create(ProductCategoryDTO request) {
-        ProductCategory category = ProductCategoryMapper.map(request);
-        productCategoryRepository.save(category);
-        return ProductCategoryMapper.map(category);
+    public ProductCategory create(String request) {
+        ProductCategory category = ProductCategory.builder()
+                .name(request)
+                .build();
+
+        return productCategoryRepository.save(category);
     }
 
     @Override
@@ -27,23 +29,21 @@ public class ProductCategoryImplement implements ProductCategorySevice {
     }
 
     @Override
-    public ProductCategoryDTO getOne(Long id) {
+    public ProductCategory getOne(Long id) {
         ProductCategory productCategory = productCategoryRepository.findById(id).orElseThrow(()-> new RuntimeException("Category Not Found"));
-        return ProductCategoryMapper.map(productCategory);
+        return productCategory;
     }
 
     @Override
-    public ProductCategoryDTO update(Long id, ProductCategoryDTO request) {
-        ProductCategoryDTO productCategoryDTO = getOne(id);
-        ProductCategory update = ProductCategoryMapper.map(productCategoryDTO);
-        update.setName(request.getName());
-        return ProductCategoryMapper.map(update);
+    public ProductCategory update(Long id, String request) {
+        ProductCategory update = getOne(id);;
+        update.setName(request);
+        return productCategoryRepository.save(update);
     }
 
     @Override
     public void delete(Long id) {
-        ProductCategoryDTO productCategoryDTO = getOne(id);
-        ProductCategory delete = ProductCategoryMapper.map(productCategoryDTO);
+        ProductCategory delete = getOne(id);
         productCategoryRepository.delete(delete);
         }
 }
