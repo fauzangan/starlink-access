@@ -20,7 +20,7 @@ public class MidtransController {
     }
 
     @GetMapping("/status/{id}")
-    public MidtransResponse getTransactionToken(@PathVariable Integer id) {
-        return midtransService.checkTransaction(id);
+    public MidtransResponse getTransactionToken(@PathVariable Long id) {
+        return midtransService.getTransactionStatus(id);
     }
 }

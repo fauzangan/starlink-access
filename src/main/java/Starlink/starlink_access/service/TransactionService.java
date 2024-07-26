@@ -8,6 +8,6 @@ public interface TransactionService {
     TransactionDTO create(TransactionDTO request) throws Exception;
     List<TransactionDTO> getAll();
     TransactionDTO getTransactionById(Long id);
-    TransactionDTO update(Long id, TransactionDTO request);
+    TransactionDTO updateTransactionStatus(Long id) throws Exception;
     void delete(Long id);
 }

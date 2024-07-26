@@ -33,4 +33,13 @@ public class TransactionController {
                 HttpStatus.OK
         );
     }
+
+    @GetMapping("/update-status/{id}")
+    public ResponseEntity<?> updateTransactionStatus(@PathVariable Long id) throws Exception{
+        return Response.renderJSON(
+                transactionService.updateTransactionStatus(id),
+                "Success Update Transaction",
+                HttpStatus.OK
+        );
+    }
 }

@@ -9,20 +9,19 @@ import Starlink.starlink_access.repository.DiscountRepository;
 import Starlink.starlink_access.repository.ProductListRepository;
 import Starlink.starlink_access.repository.TransactionRepository;
 import Starlink.starlink_access.repository.UserRepository;
-import Starlink.starlink_access.service.DiscountService;
+import Starlink.starlink_access.service.MidtransService;
 import Starlink.starlink_access.service.ProductSevice;
 import Starlink.starlink_access.service.TransactionService;
 import Starlink.starlink_access.util.request.MidtransRequest;
 import Starlink.starlink_access.util.response.MidtransResponse;
 import Starlink.starlink_access.utils.DateFormatter;
+import Starlink.starlink_access.utils.MidtransResponseInjector;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
@@ -34,7 +33,7 @@ public class TransactionServiceImplement implements TransactionService {
     private final ProductListServiceImplement productListServiceImplement;
     private final ProductListRepository productListRepository;
     private final UserRepository userRepository;
-    private final MidtransServiceImplement midtransServiceImplement;
+    private final MidtransService midtransService;
     private final ProductSevice productSevice;
     private final DiscountRepository discountRepository;
 
@@ -43,13 +42,10 @@ public class TransactionServiceImplement implements TransactionService {
     public TransactionDTO create(TransactionDTO request) throws Exception{
 
         Transaction transaction = Transaction.builder()
-                .created_at(DateFormatter.convertStringDateToLong(request.getCreated_at()))
-                .updated_at(DateFormatter.convertStringDateToLong(request.getUpdated_at()))
                 .expired_date(DateFormatter.convertStringDateToLong(request.getExpired_date()))
                 .discount(discountRepository.findById(request.getDiscount()).orElseThrow(
                         () -> new RuntimeException("Error find discount")
                 ))
-                .is_settled(false)
                 .user(userRepository.findById(request.getUser_id())
                         .orElseThrow(() -> new RuntimeException("User not found")))
                 .build();
@@ -76,20 +72,18 @@ public class TransactionServiceImplement implements TransactionService {
         totalTransactionPrice = totalTransactionPrice - (totalTransactionPrice*request.getDiscount()/100);
 
         try {
-            MidtransRequest midtransRequest = new MidtransRequest();
-            midtransRequest.setPayment_type(request.getPayment_type());
-            midtransRequest.setTransaction_details(TransactionDetailDTO.builder()
+            MidtransRequest midtransRequest = MidtransRequest.builder()
+                    .payment_type(request.getPayment_type())
+                    .transaction_details(TransactionDetailDTO.builder()
                             .gross_amount(totalTransactionPrice)
                             .order_id(String.valueOf(createdTransaction.getId()))
-                    .build());
-            midtransRequest.setBank_transfer(request.getBank_transfer());
+                            .build())
+                    .bank_transfer(request.getBank_transfer())
+                    .build();
 
-            MidtransResponse midtransResponse = midtransServiceImplement.chargeTransaction(midtransRequest);
-            createdTransaction.setVirtualNumber(midtransResponse.getVaNumbers().get(0).getVaNumber());
-            createdTransaction.setBank_transfer(midtransResponse.getVaNumbers().get(0).getBank());
-            createdTransaction.setPayment_type(midtransResponse.getPaymentType());
+            MidtransResponse midtransResponse = midtransService.chargeTransaction(midtransRequest);
+            MidtransResponseInjector.injectToTransaction(midtransResponse, createdTransaction);
             createdTransaction.setTotal_price(totalTransactionPrice);
-            createdTransaction.setTransaction_details(midtransResponse.getOrderId());
             createdTransaction.setQuantity(totalQuantity);
 
         } catch (Exception e) {
@@ -97,7 +91,6 @@ public class TransactionServiceImplement implements TransactionService {
         }
 
         Transaction savedTransaction = transactionRepository.save(createdTransaction);
-
         return TransactionMapper.map(savedTransaction);
     }
 
@@ -115,8 +108,14 @@ public class TransactionServiceImplement implements TransactionService {
     }
 
     @Override
-    public TransactionDTO update(Long id, TransactionDTO request) {
-        return null;
+    @Transactional(rollbackOn = Exception.class)
+    public TransactionDTO updateTransactionStatus(Long id) throws Exception {
+        MidtransResponse midtransResponse = midtransService.getTransactionStatus(id);
+        Transaction transaction = transactionRepository.findById(id).orElseThrow(
+                () -> new RuntimeException("Transaction not Found")
+        );
+        transaction.setTransaction_status(midtransResponse.getTransactionStatus());
+        return TransactionMapper.map(transaction);
     }
 
     @Override

@@ -1,12 +1,8 @@
 package Starlink.starlink_access.DTO;
 
-import Starlink.starlink_access.model.Discount;
-import Starlink.starlink_access.model.Product;
 import lombok.*;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @Setter
 @Getter
@@ -26,7 +22,7 @@ public class TransactionDTO {
 
     private String expired_date;
 
-    private Boolean is_settled;
+    private String transaction_status;
 
     private Long user_id;
 

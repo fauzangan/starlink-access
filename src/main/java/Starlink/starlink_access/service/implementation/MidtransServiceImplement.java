@@ -47,8 +47,8 @@ public class MidtransServiceImplement implements MidtransService {
     }
 
     @Override
-    public MidtransResponse checkTransaction(Integer ids) {
-        String getStatusEndpoint = "https://api.sandbox.midtrans.com/v2/"+ ids +"/status";
+    public MidtransResponse getTransactionStatus(Long id) {
+        String getStatusEndpoint = "https://api.sandbox.midtrans.com/v2/"+ id +"/status";
 
         HttpHeaders httpHeaders = new HttpHeaders();
         String auth = SERVER_KEY + ":";

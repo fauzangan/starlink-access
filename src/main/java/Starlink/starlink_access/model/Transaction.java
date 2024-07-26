@@ -6,8 +6,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.Instant;
 import java.util.List;
-import java.util.Map;
 
 @Data
 @Builder
@@ -30,7 +30,7 @@ public class Transaction {
 
     private Long expired_date;
 
-    private Boolean is_settled;
+    private String transaction_status;
 
     private String payment_type;
 
@@ -50,4 +50,15 @@ public class Transaction {
     @JoinColumn(name = "discount_id",nullable = false)
     @ManyToOne
     private Discount discount;
+
+    @PrePersist
+    protected void onCreate() {
+        created_at = Instant.now().toEpochMilli();
+        updated_at = Instant.now().toEpochMilli();
+    }
+
+    @PreUpdate
+    protected void onUpdate() {
+        updated_at = Instant.now().toEpochMilli();
+    }
 }

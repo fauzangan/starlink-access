@@ -4,12 +4,9 @@ import Starlink.starlink_access.DTO.BankTransferDTO;
 import Starlink.starlink_access.DTO.ProductListDTO;
 import Starlink.starlink_access.DTO.TransactionDTO;
 import Starlink.starlink_access.DTO.TransactionDetailDTO;
-import Starlink.starlink_access.model.ProductList;
 import Starlink.starlink_access.model.Transaction;
 import Starlink.starlink_access.utils.DateFormatter;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 public class TransactionMapper {
@@ -22,7 +19,7 @@ public class TransactionMapper {
                 .created_at(DateFormatter.convertLongToStringDate(transaction.getCreated_at()))
                 .updated_at(DateFormatter.convertLongToStringDate(transaction.getUpdated_at()))
                 .expired_date(DateFormatter.convertLongToStringDate(transaction.getExpired_date()))
-                .is_settled(transaction.getIs_settled())
+                .transaction_status(transaction.getTransaction_status())
                 .user_id(transaction.getUser().getId())
                 .discount(transaction.getDiscount().getPercentage())
                 .payment_type(transaction.getPayment_type())
