@@ -63,7 +63,7 @@ public class TransactionServiceImplement implements TransactionService {
         for (var productList : request.getProductLists()){
             productList.setTransaction_id(createdTransaction.getId());
             try {
-                productList.setPrice(productSevice.getOne(productList.getProduct_id()).getPrice());
+                productList.setPrice(productSevice.getOne(productList.getProduct_id()).getPrice()*productList.getQuantity());
                 temp.add(productListServiceImplement.create(productList));
             } catch (Exception e){
                 throw new RuntimeException("Failed creating product list, rollback transaction");
@@ -73,6 +73,7 @@ public class TransactionServiceImplement implements TransactionService {
         }
 
         createdTransaction.setProductLists(temp);
+        totalTransactionPrice = totalTransactionPrice - (totalTransactionPrice*request.getDiscount()/100);
 
         try {
             MidtransRequest midtransRequest = new MidtransRequest();

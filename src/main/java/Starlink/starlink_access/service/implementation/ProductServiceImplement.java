@@ -10,7 +10,7 @@ import Starlink.starlink_access.repository.ProductRepository;
 import Starlink.starlink_access.service.CloudinaryService;
 import Starlink.starlink_access.service.ProductCategorySevice;
 import Starlink.starlink_access.service.ProductSevice;
-import Starlink.starlink_access.util.Response.CloudinaryResponse;
+import Starlink.starlink_access.util.response.CloudinaryResponse;
 import Starlink.starlink_access.util.specification.FileUploadUtil;
 import Starlink.starlink_access.util.specification.GeneralSpecification;
 import lombok.RequiredArgsConstructor;

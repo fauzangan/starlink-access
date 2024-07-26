@@ -1,7 +1,7 @@
 package Starlink.starlink_access.service.implementation;
 
 import Starlink.starlink_access.service.CloudinaryService;
-import Starlink.starlink_access.util.Response.CloudinaryResponse;
+import Starlink.starlink_access.util.response.CloudinaryResponse;
 import com.cloudinary.Cloudinary;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
