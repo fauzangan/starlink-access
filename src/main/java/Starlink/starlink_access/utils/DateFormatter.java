@@ -1,9 +1,6 @@
 package Starlink.starlink_access.utils;
 
-import java.time.DateTimeException;
-import java.time.Instant;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
+import java.time.*;
 import java.time.format.DateTimeFormatter;
 
 public class DateFormatter {
@@ -15,13 +12,13 @@ public class DateFormatter {
         }
 
         LocalDateTime dateTime = LocalDateTime.ofInstant(Instant.ofEpochMilli(timestamp), ZoneId.systemDefault());
-        return dateTime.format(FORMATTER);
+        return dateTime.toLocalDate().format(FORMATTER); // Only format the date part
     }
 
     public static Long convertStringDateToLong(String dateStr) {
         try {
-            LocalDateTime dateTime = LocalDateTime.parse(dateStr, FORMATTER);
-            return dateTime.atZone(ZoneId.systemDefault()).toInstant().toEpochMilli();
+            LocalDate date = LocalDate.parse(dateStr, FORMATTER);
+            return date.atStartOfDay(ZoneId.systemDefault()).toInstant().toEpochMilli();
         } catch (DateTimeException e) {
             // Handle the exception based on your requirement
             e.printStackTrace();

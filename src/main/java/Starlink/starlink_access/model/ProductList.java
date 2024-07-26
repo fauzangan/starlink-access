@@ -18,10 +18,10 @@ public class ProductList {
     private Long id;
 
     @Column(name = "price")
-    private Integer price;
+    private Long price;
 
     @Column(name = "quantity")
-    private Integer quantity;
+    private Long quantity;
 
     @JoinColumn(name = "product_id",nullable = false)
     @ManyToOne

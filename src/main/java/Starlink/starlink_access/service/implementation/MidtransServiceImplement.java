@@ -3,10 +3,7 @@ package Starlink.starlink_access.service.implementation;
 import Starlink.starlink_access.service.MidtransService;
 import Starlink.starlink_access.util.request.MidtransRequest;
 import Starlink.starlink_access.util.response.MidtransResponse;
-import com.midtrans.httpclient.SnapApi;
-import com.midtrans.httpclient.error.MidtransError;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -16,9 +13,6 @@ import org.springframework.web.client.RestTemplate;
 
 import java.nio.charset.StandardCharsets;
 import java.util.Base64;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor

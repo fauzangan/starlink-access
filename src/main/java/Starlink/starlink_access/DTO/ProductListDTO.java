@@ -15,8 +15,8 @@ import lombok.*;
 @NoArgsConstructor
 public class ProductListDTO {
     private Long id;
-    private Integer price;
-    private Integer quantity;
+    private Long price;
+    private Long quantity;
     private Long product_id;
     private Long transaction_id;
 }

@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.List;
+import java.util.Map;
 
 @Data
 @Builder
@@ -30,6 +31,14 @@ public class Transaction {
     private Long expired_date;
 
     private Boolean is_settled;
+
+    private String payment_type;
+
+    private String transaction_details;
+
+    private String bank_transfer;
+
+    private String virtualNumber;
 
     @JoinColumn(name = "user_id",nullable = false)
     @ManyToOne

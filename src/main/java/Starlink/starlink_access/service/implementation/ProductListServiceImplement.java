@@ -20,7 +20,7 @@ public class ProductListServiceImplement implements ProductListService {
     private final TransactionRepository transactionRepository;
 
     @Override
-    public ProductListDTO create(ProductListDTO productDTO) {
+    public ProductList create(ProductListDTO productDTO) {
         ProductList productList = ProductList.builder()
                 .id(productDTO.getId())
                 .price(productDTO.getPrice())
@@ -31,9 +31,7 @@ public class ProductListServiceImplement implements ProductListService {
                         .orElseThrow(() -> new RuntimeException("Transaction not found")))
                 .build();
 
-        productListRepository.save(productList);
-
-        return productDTO;
+        return productListRepository.save(productList);
     }
 
     @Override

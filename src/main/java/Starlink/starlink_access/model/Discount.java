@@ -18,5 +18,5 @@ public class Discount {
     private String name;
 
     @Column(nullable = false)
-    private Integer percentage;
+    private Long percentage;
 }

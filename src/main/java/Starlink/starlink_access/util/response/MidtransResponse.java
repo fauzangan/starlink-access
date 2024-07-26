@@ -1,9 +1,15 @@
 package Starlink.starlink_access.util.response;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.*;
 
 import java.util.List;
 
+@Setter
+@Getter
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
 public class MidtransResponse {
     @JsonProperty("status_code")
     private String statusCode;
@@ -43,7 +49,10 @@ public class MidtransResponse {
     @JsonProperty("expiry_time")
     private String expiryTime;
 
+    @Setter
+    @Getter
     public static class VaNumber {
+        @JsonProperty("bank")
         private String bank;
         @JsonProperty("va_number")
         private String vaNumber;

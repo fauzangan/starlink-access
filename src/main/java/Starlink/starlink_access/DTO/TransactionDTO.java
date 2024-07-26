@@ -4,7 +4,9 @@ import Starlink.starlink_access.model.Discount;
 import Starlink.starlink_access.model.Product;
 import lombok.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Setter
 @Getter
@@ -30,5 +32,13 @@ public class TransactionDTO {
 
     private List<ProductListDTO> productLists;
 
-    private Integer discount;
+    private Long discount;
+
+    private String payment_type;
+
+    private TransactionDetailDTO transaction_details;
+
+    private BankTransferDTO bank_transfer;
+
+    private String virtualNumber;
 }

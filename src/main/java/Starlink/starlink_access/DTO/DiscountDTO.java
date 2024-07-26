@@ -14,6 +14,6 @@ public class DiscountDTO {
 
     private String name;
 
-    private Integer percentage;
+    private Long percentage;
 }
 

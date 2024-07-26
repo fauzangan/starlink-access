@@ -1,5 +1,7 @@
 package Starlink.starlink_access.util.request;
 
+import Starlink.starlink_access.DTO.BankTransferDTO;
+import Starlink.starlink_access.DTO.TransactionDetailDTO;
 import lombok.*;
 
 import java.util.Map;
@@ -11,6 +13,6 @@ import java.util.Map;
 @Builder
 public class MidtransRequest {
     private String payment_type;
-    private Map<String, Object> transaction_details;
-    private Map<String, Object> bank_transfer;
+    private TransactionDetailDTO transaction_details;
+    private BankTransferDTO bank_transfer;
 }
