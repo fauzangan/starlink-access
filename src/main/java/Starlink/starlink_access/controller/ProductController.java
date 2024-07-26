@@ -5,7 +5,7 @@ import Starlink.starlink_access.DTO.ProductDTO;
 import Starlink.starlink_access.model.Product;
 import Starlink.starlink_access.service.CloudinaryService;
 import Starlink.starlink_access.service.ProductSevice;
-import Starlink.starlink_access.util.Response.Response;
+import Starlink.starlink_access.util.response.Response;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
