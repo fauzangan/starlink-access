@@ -109,12 +109,24 @@ public class TransactionServiceImplement implements TransactionService {
 
     @Override
     @Transactional(rollbackOn = Exception.class)
-    public TransactionDTO updateTransactionStatus(Long id) throws Exception {
-        MidtransResponse midtransResponse = midtransService.getTransactionStatus(id);
+    public TransactionDTO fetchTransactionStatus(Long id) throws Exception {
+        MidtransResponse midtransResponse = midtransService.fetchTransaction(id);
         Transaction transaction = transactionRepository.findById(id).orElseThrow(
                 () -> new RuntimeException("Transaction not Found")
         );
         transaction.setTransaction_status(midtransResponse.getTransactionStatus());
+        transactionRepository.save(transaction);
+        return TransactionMapper.map(transaction);
+    }
+
+    @Override
+    public TransactionDTO updateTransaction(Long id, String status) {
+        MidtransResponse midtransResponse = midtransService.updateTransactionStatus(id, status);
+        Transaction transaction = transactionRepository.findById(id).orElseThrow(
+                () -> new RuntimeException("Transaction not found")
+        );
+        transaction.setTransaction_status(midtransResponse.getTransactionStatus());
+        transactionRepository.save(transaction);
         return TransactionMapper.map(transaction);
     }
 
