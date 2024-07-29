@@ -5,12 +5,15 @@ The Starlink Access project uses Spring Boot as a framework. You can visit https
 project. Starlink Access provides services to customers such as registration for monthly subscriptions to Starlink packages, 
 purchase of Starlink antennas, and purchase of Starlink internet quota. The project is also integrated with Mitrans for payment needs.
 
+## Diagram Database
+![Projects Dependencies](docs/db-diagram.png)
+
 ## Project Structure
 In this project, several dependencies are used, including Lombok, which facilitates writing code with annotations, JDBC API 
 functions to connect to the database, Spring Data JPA functions for CRUD operations on the database, Spring Security functions for 
 authentication and authorization, and PostgreSQL Driver as a database driver for PostgreSQL. The project structure is illustrated in the diagram below:
 
-![Project Dependencies](Dependency.png)
+![Project Dependencies](docs/images/Dependency.png)
 
 ## Database
 The Starlink Access application uses PostgreSQL as the main database. The database schema includes several tables:
@@ -32,15 +35,11 @@ ensuring each role has specific predefined access rights.
 2. The system receives user data (name, email, password, username, birth date).
 3. Passwords are encrypted before storage in the database.
 
-![Project Dependencies](Register.png)
-
 ***User Authentication:***
 1. Users enter credential (email and password).
 2. System verifies credentials against the User table.
 3. if valid, system generates a JWT token.
 4. JWT token is sent to the user for subsequent requests.
-
-![Project Dependencies](Login.png)
 
 ***Role Management:***
 1. System provides two roles: admin and users.
@@ -127,6 +126,16 @@ ensuring each role has specific predefined access rights.
 ***Endpoint Collection:***
 1. All API endpoints are documented in a Postman collection.
 2. Collection includes endpoints for authentication, product management, transactions.
+
+- Authentcation In Postman
+![Project Dependencies](docs/images/Register.png)
+
+- Login In Postman
+![Project Dependencies](docs/images/Login.png)
+
+- Transaction Process
+![Project Dependencies](docs/images/Transaction_Status.png)
+
 
 ***Test Scenarios:***
 1. Test scenarios are created for each main application feature.
