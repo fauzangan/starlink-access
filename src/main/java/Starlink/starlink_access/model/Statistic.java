@@ -1,6 +1,7 @@
 package Starlink.starlink_access.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -21,7 +22,9 @@ public class Statistic {
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
+    @Column(nullable = false)
     private Long quota;
 
+    @Column(nullable = false)
     private Long expiredDate;
 }
