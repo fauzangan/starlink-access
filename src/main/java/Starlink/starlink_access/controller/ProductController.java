@@ -6,12 +6,6 @@ import Starlink.starlink_access.model.Product;
 import Starlink.starlink_access.service.CloudinaryService;
 import Starlink.starlink_access.service.ProductSevice;
 import Starlink.starlink_access.util.response.Response;
-import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.media.Content;
-import io.swagger.v3.oas.annotations.media.Schema;
-import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import io.swagger.v3.oas.annotations.responses.ApiResponses;
-import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
@@ -23,71 +17,59 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-
 @RestController
 @RequestMapping("/api/admin/products")
 @RequiredArgsConstructor
 @Validated
-@Tag(name = "Product API Docs", description = "Product API Docs")
 public class ProductController {
     private final ProductSevice productSevice;
 
-    @Operation(summary = "Create Product", description = "Create Product and Return Http Status OK")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Successful Create Product", content = @Content(schema = @Schema(implementation = ResponseEntity.class))),
-            @ApiResponse(responseCode = "400", description = "Invalid input request")
-    })
     @PostMapping
-    public ResponseEntity<?> create (@RequestBody OnlyForProductDTO request){
-        return Response.renderJSON(
-                productSevice.create(request),
-                "Product created",
-                HttpStatus.OK
-        );
+    public ResponseEntity<?> create(@RequestBody @Valid OnlyForProductDTO request) {
+        try {
+            Product createdProduct = productSevice.create(request);
+            return ResponseEntity.status(HttpStatus.CREATED)
+                    .body(Response.renderJSON(createdProduct, "Product created", HttpStatus.CREATED));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(Response.renderJSON(null, e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR));
+        }
     }
 
-    @Operation(summary = "Get All Products", description = "Get All Products and Return Http Status OK")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Successful Get All Products", content = @Content(schema = @Schema(implementation = ResponseEntity.class))),
-    })
     @GetMapping
-    public ResponseEntity<?> getAll(@PageableDefault(page = 0, size = 10, sort = "id", direction = Sort.Direction.ASC)
-                                        Pageable pageable, @ModelAttribute ProductDTO request){
-        return Response.renderJSON(
-                productSevice.getAll(pageable,request),
-                "Success get all product",
-                HttpStatus.OK
-        );
+    public ResponseEntity<?> getAll(@PageableDefault(page = 0, size = 10, sort = "id", direction = Sort.Direction.ASC) Pageable pageable,
+                                    @ModelAttribute ProductDTO request) {
+        try {
+            return ResponseEntity.ok(Response.renderJSON(productSevice.getAll(pageable, request), "Success get all products", HttpStatus.OK));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(Response.renderJSON(null, e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR));
+        }
     }
 
-    @Operation(summary = "Get One Product", description = "Get One Products and Return Http Status OK")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Successful Get One Product", content = @Content(schema = @Schema(implementation = ResponseEntity.class))),
-    })
     @GetMapping("/{id}")
-    public ResponseEntity<?> getOne(@PathVariable Long id){
-        return Response.renderJSON(
-                productSevice.getOne(id),
-                "Success get The product",
-                HttpStatus.OK
-        );
+    public ResponseEntity<?> getOne(@PathVariable Long id) {
+        try {
+            ProductDTO productDTO = productSevice.getOne(id);
+            return ResponseEntity.ok(Response.renderJSON(productDTO, "Success get the product", HttpStatus.OK));
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body(Response.renderJSON(null, e.getMessage(), HttpStatus.NOT_FOUND));
+        }
     }
 
-    @Operation(summary = "Update Product", description = "Update Product and Return Http Status OK")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Successful Update Product", content = @Content(schema = @Schema(implementation = ResponseEntity.class))),
-            @ApiResponse(responseCode = "400", description = "Invalid input request")
-    })
     @PutMapping("/{id}")
-    public ResponseEntity<?> update(@PathVariable Long id,@RequestBody OnlyForProductDTO request){
-        return Response.renderJSON(
-                productSevice.update(id,request),
-                "Product Updated",
-                HttpStatus.ACCEPTED
-        );
+    public ResponseEntity<?> update(@PathVariable Long id, @RequestBody @Valid OnlyForProductDTO request) {
+        try {
+            Product updatedProduct = productSevice.update(id, request);
+            return ResponseEntity.status(HttpStatus.ACCEPTED)
+                    .body(Response.renderJSON(updatedProduct, "Product updated", HttpStatus.ACCEPTED));
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body(Response.renderJSON(null, e.getMessage(), HttpStatus.NOT_FOUND));
+        }
     }
 
-    @Operation(summary = "Delete Product", description = "Delete Product By ID's")
     @DeleteMapping("/{id}")
     public ResponseEntity<?> delete(@PathVariable Long id){
         productSevice.delete(id);
@@ -98,7 +80,6 @@ public class ProductController {
         );
     }
 
-    @Operation(summary = "Update Image Product", description = "Update Images for Product and Return Http Response OK")
     @PostMapping("/{id}/photo")
     public ResponseEntity<?> uploadImage(@PathVariable Long id,@RequestPart MultipartFile file) {
         productSevice.uploadImage(file,id);

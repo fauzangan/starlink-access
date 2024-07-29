@@ -1,5 +1,6 @@
 package Starlink.starlink_access.controller;
 import Starlink.starlink_access.DTO.ProductCategoryDTO;
+import Starlink.starlink_access.model.ProductCategory;
 import Starlink.starlink_access.service.ProductCategorySevice;
 import Starlink.starlink_access.util.response.Response;
 import io.swagger.v3.oas.annotations.Operation;
@@ -56,11 +57,16 @@ public class ProductCategoryController {
     })
     @GetMapping("/{id}")
     public ResponseEntity<?> getOne(@PathVariable Long id){
-        return Response.renderJSON(
-                productCategorySevice.getOne(id),
-                "Success get The category",
-                HttpStatus.OK
-        );
+        try {
+            return Response.renderJSON(
+                    productCategorySevice.getOne(id),
+                    "Success get The category",
+                    HttpStatus.OK
+            );
+        } catch (RuntimeException e) {
+            // Log the exception if needed
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        }
     }
 
     @Operation(summary = "Update Product Category", description = "Update Product Category and Return Http Status Accept")
@@ -69,23 +75,24 @@ public class ProductCategoryController {
             @ApiResponse(responseCode = "400", description = "Invalid input request")
     })
     @PostMapping("/{id}")
-    public ResponseEntity<?> update(@PathVariable Long id,@RequestBody String request){
-        return Response.renderJSON(
-                productCategorySevice.update(id,request),
-                "Category Updated",
-                HttpStatus.ACCEPTED
-        );
+    public ResponseEntity<?> update(@PathVariable Long id, @RequestBody String request) {
+        try {
+            ProductCategory updatedCategory = productCategorySevice.update(id, request);
+            return Response.renderJSON(updatedCategory, "Category Updated", HttpStatus.ACCEPTED);
+        } catch (RuntimeException e) {
+            return Response.renderJSON(null, "Failed to update category: " + e.getMessage(), HttpStatus.NOT_FOUND);
+        }
     }
 
     @Operation(summary = "Delete Product Category", description = "Delete Product Category By Product Category ID's")
     @DeleteMapping("/{id}")
     public ResponseEntity<?> delete(@PathVariable Long id){
-        productCategorySevice.delete(id);
-        return Response.renderJSON(
-                "",
-                "Category Deleted",
-                HttpStatus.OK
-        );
+        try {
+            productCategorySevice.delete(id);
+            return Response.renderJSON("", "Category Deleted", HttpStatus.OK);
+        } catch (RuntimeException e) {
+            return Response.renderJSON("", "Failed to delete category: " + e.getMessage(), HttpStatus.NOT_FOUND);
+        }
     }
 
 }
