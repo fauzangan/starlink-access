@@ -22,6 +22,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -132,6 +133,10 @@ public class TransactionServiceImplement implements TransactionService {
 
     @Override
     public void delete(Long id) {
+        List<ProductList> productLists = productListRepository.findByTransactionId(id);
+        for (var productList : productLists){
+            productListRepository.delete(productList);
+        }
         transactionRepository.deleteById(id);
     }
 }
