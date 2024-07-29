@@ -127,14 +127,20 @@ ensuring each role has specific predefined access rights.
 1. All API endpoints are documented in a Postman collection.
 2. Collection includes endpoints for authentication, product management, transactions.
 
-- Authentcation In Postman
+- Register In Postman
 ![Project Dependencies](docs/images/Register.png)
 
 - Login In Postman
 ![Project Dependencies](docs/images/Login.png)
 
-- Transaction Process
+- Transaction Process In Postman
 ![Project Dependencies](docs/images/Transaction_Status.png)
+
+- Discount In Postman
+![Project Dependencies](docs/images/Discount.png)
+
+- Product & Product Category In Postman
+![Project Dependencies](docs/images/ProductAndProduct_Category.png)
 
 
 ***Test Scenarios:***
