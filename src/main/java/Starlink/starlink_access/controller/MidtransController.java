@@ -3,7 +3,6 @@ package Starlink.starlink_access.controller;
 import Starlink.starlink_access.service.MidtransService;
 import Starlink.starlink_access.util.request.MidtransRequest;
 import Starlink.starlink_access.util.response.MidtransResponse;
-import com.midtrans.httpclient.error.MidtransError;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,6 +20,6 @@ public class MidtransController {
 
     @GetMapping("/status/{id}")
     public MidtransResponse getTransactionToken(@PathVariable Long id) {
-        return midtransService.getTransactionStatus(id);
+        return midtransService.fetchTransaction(id);
     }
 }

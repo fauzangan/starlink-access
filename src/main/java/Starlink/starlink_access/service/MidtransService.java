@@ -5,5 +5,6 @@ import Starlink.starlink_access.util.response.MidtransResponse;
 
 public interface MidtransService {
     MidtransResponse chargeTransaction(MidtransRequest midtransRequest);
-    MidtransResponse getTransactionStatus(Long id);
+    MidtransResponse fetchTransaction(Long id);
+    MidtransResponse updateTransactionStatus(Long id, String status);
 }
