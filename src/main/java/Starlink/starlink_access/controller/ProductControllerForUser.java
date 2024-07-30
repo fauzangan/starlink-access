@@ -1,6 +1,7 @@
 package Starlink.starlink_access.controller;
 
 import Starlink.starlink_access.DTO.ProductDTO;
+import Starlink.starlink_access.model.Product;
 import Starlink.starlink_access.service.ProductSevice;
 import Starlink.starlink_access.util.response.Response;
 import io.swagger.v3.oas.annotations.Operation;
@@ -29,7 +30,7 @@ public class ProductControllerForUser {
 
     @Operation(summary = "Get All Products", description = "Get Products For Users")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Successful Get Products", content = @Content(schema = @Schema(implementation = ResponseEntity.class))),
+            @ApiResponse(responseCode = "200", description = "Successful Get Products", content = @Content(schema = @Schema(implementation = Product.class))),
     })
     @GetMapping
     public ResponseEntity<?> getAll(@PageableDefault(page = 0, size = 10, sort = "id", direction = Sort.Direction.ASC)
@@ -43,7 +44,7 @@ public class ProductControllerForUser {
 
     @Operation(summary = "Get One Product", description = "Get One Product For Users")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Successful Get Products", content = @Content(schema = @Schema(implementation = ResponseEntity.class))),
+            @ApiResponse(responseCode = "200", description = "Successful Get Products", content = @Content(schema = @Schema(implementation = Product.class))),
     })
     @GetMapping("/{id}")
     public ResponseEntity<?> getOne(@PathVariable Long id){

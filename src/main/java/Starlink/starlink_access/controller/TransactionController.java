@@ -24,7 +24,7 @@ public class TransactionController {
 
     @Operation(summary = "Create Transaction", description = "Create transaction and return Http.created")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Successful Create Transaction", content = @Content(schema = @Schema(implementation = ResponseEntity.class))),
+            @ApiResponse(responseCode = "200", description = "Successful Create Transaction", content = @Content(schema = @Schema(implementation = TransactionDTO.class))),
             @ApiResponse(responseCode = "400", description = "Invalid input request")
     })
     @PostMapping
@@ -38,7 +38,7 @@ public class TransactionController {
 
     @Operation(summary = "Get All Transactions", description = "Get All transactions and return Http.OK")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Successful Get All Transactions", content = @Content(schema = @Schema(implementation = ResponseEntity.class))),
+            @ApiResponse(responseCode = "200", description = "Successful Get All Transactions", content = @Content(schema = @Schema(implementation = TransactionDTO.class))),
     })
     @GetMapping
     public ResponseEntity<?> getAll() {
@@ -51,7 +51,7 @@ public class TransactionController {
 
     @Operation(summary = "Fetch Transaction to Midtrans API", description = "Fetch Transaction to Midtrans API and return Http.OK")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Successful Fetch Transaction", content = @Content(schema = @Schema(implementation = ResponseEntity.class))),
+            @ApiResponse(responseCode = "200", description = "Successful Fetch Transaction", content = @Content(schema = @Schema(implementation = TransactionDTO.class))),
     })
     @GetMapping("/fetch-status/{id}")
     public ResponseEntity<?> fetchTransactionStatus(@PathVariable Long id) throws Exception{
@@ -64,7 +64,7 @@ public class TransactionController {
 
     @Operation(summary = "Update Transaction Status to Midtrans API", description = "Update Transaction to Midtrans API and return Http.OK")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Successful Update Transaction", content = @Content(schema = @Schema(implementation = ResponseEntity.class))),
+            @ApiResponse(responseCode = "200", description = "Successful Update Transaction", content = @Content(schema = @Schema(implementation = TransactionDTO.class))),
     })
     @PostMapping("/update-status/{id}/{status}")
     public ResponseEntity<?> updateTransactionStatus(@PathVariable Long id, @PathVariable String status) throws Exception{

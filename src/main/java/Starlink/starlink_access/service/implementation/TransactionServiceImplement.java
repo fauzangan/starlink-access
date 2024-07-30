@@ -6,13 +6,9 @@ import Starlink.starlink_access.mapper.TransactionMapper;
 import Starlink.starlink_access.model.ProductList;
 import Starlink.starlink_access.model.Transaction;
 import Starlink.starlink_access.repository.*;
-import Starlink.starlink_access.service.AuthService;
-import Starlink.starlink_access.service.MidtransService;
-import Starlink.starlink_access.service.ProductSevice;
-import Starlink.starlink_access.service.TransactionService;
+import Starlink.starlink_access.service.*;
 import Starlink.starlink_access.util.request.MidtransRequest;
 import Starlink.starlink_access.util.response.MidtransResponse;
-import Starlink.starlink_access.utils.DateFormatter;
 import Starlink.starlink_access.utils.MidtransResponseInjector;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -20,7 +16,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -29,7 +24,7 @@ import java.util.stream.Collectors;
 public class TransactionServiceImplement implements TransactionService {
 
     private final TransactionRepository transactionRepository;
-    private final ProductListServiceImplement productListServiceImplement;
+    private final ProductListService productListService;
     private final ProductListRepository productListRepository;
     private final AuthService authService;
     private final MidtransService midtransService;
@@ -56,11 +51,11 @@ public class TransactionServiceImplement implements TransactionService {
             try {
                 var product = productRepository.findById(productList.getProduct_id()).orElseThrow(() -> new RuntimeException("Product not found"));
                 productList.setPrice(product.getPrice()*productList.getQuantity());
-                temp.add(productListServiceImplement.create(productList));
+                temp.add(productListService.create(productList));
 
                 product.setStock(product.getStock() - productList.getQuantity());
                 if (product.getStock() < 0){
-                    throw new RuntimeException("Product Quantity should not more than stock avalilable");
+                    throw new RuntimeException("Product quantity should not more than stock avalilable");
                 } else {
                     productRepository.save(product);
                 }
