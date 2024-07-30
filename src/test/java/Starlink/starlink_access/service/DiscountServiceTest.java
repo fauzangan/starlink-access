@@ -19,12 +19,13 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.test.context.ActiveProfiles;
 
 import java.util.List;
+import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.eq;
+import static org.junit.jupiter.api.Assertions.assertAll;
+import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.BDDMockito.given;
-import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.*;
 
 @ActiveProfiles("test")
 @ExtendWith(MockitoExtension.class)
@@ -38,6 +39,8 @@ public class DiscountServiceTest {
 
     private DiscountDTO discountDTO;
     private Discount discount;
+    private DiscountDTO updatedDTO;
+    private Discount updatedDiscount;
 
     @BeforeEach
     public void setUp() {
@@ -52,6 +55,18 @@ public class DiscountServiceTest {
                 .name("Cashback")
                 .percentage(50L)
                 .build();
+
+        updatedDTO = DiscountDTO.builder()
+                .id(1L)
+                .name("Updated Cashback")
+                .percentage(30L)
+                .build();
+
+        updatedDiscount = Discount.builder()
+                .id(1L)
+                .name("Updated Cashback")
+                .percentage(30L)
+                .build();
     }
 
     @Test
@@ -59,9 +74,9 @@ public class DiscountServiceTest {
     public void givenDiscountDTO_whenSave_Success() {
         given(discountRepository.save(any(Discount.class))).willReturn(discount);
 
-        DiscountDTO savedDiscount = discountService.create(discountDTO);
+        DiscountDTO disounts = discountService.create(discountDTO);
 
-        assertThat(savedDiscount).isNotNull();
+        assertThat(disounts).isNotNull();
         verify(discountRepository).save(any(Discount.class));
     }
 
@@ -77,5 +92,41 @@ public class DiscountServiceTest {
 
         assertThat(discounts).isNotEmpty().hasSize(1);
         verify(discountRepository).findAll(any(Specification.class), eq(pageable));
+    }
+
+    @Test
+    @DisplayName("Test for Get One Discount")
+    public void givenDiscount_whenGetOne_Success() {
+        given(discountRepository.findById(any())).willReturn(Optional.of(discount));
+
+        DiscountDTO discounts = discountService.getById(1L);
+
+        assertThat(discounts).isNotNull();
+        assertThat(discounts.getId()).isEqualTo(discountDTO.getId());
+        verify(discountRepository).findById(1L);
+    }
+
+    @Test
+    @DisplayName("Test for update discount")
+    public void givenDiscountDTO_whenUpdate_Success() {
+        given(discountRepository.findById(any(Long.class))).willReturn(Optional.of(discount));
+        given(discountRepository.save(any(Discount.class))).willReturn(updatedDiscount);
+
+        DiscountDTO discounts = discountService.update(1L, updatedDTO);
+
+        assertThat(discounts).isNotNull();
+        assertThat(discounts.getName()).isEqualTo(updatedDTO.getName());
+        assertThat(discounts.getPercentage()).isEqualTo(updatedDTO.getPercentage());
+        verify(discountRepository).findById(1L);
+        verify(discountRepository).save(any(Discount.class));
+    }
+
+    @Test
+    @DisplayName("Test for Delete Discount")
+    public void givenDiscountId_WhenDelete_Success(){
+        Discount discount = mock(Discount.class);
+        when(discountRepository.findById(any(Long.class)))
+                .thenReturn(Optional.of(discount));
+        assertAll(() -> discountService.delete(1L));
     }
 }
