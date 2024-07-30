@@ -9,6 +9,6 @@ public interface TransactionService {
     List<TransactionDTO> getAll();
     TransactionDTO getTransactionById(Long id);
     TransactionDTO fetchTransactionStatus(Long id) throws Exception;
-    TransactionDTO updateTransaction(Long id, String status);
-    void delete(Long id);
+    TransactionDTO updateTransaction(Long id, String status) throws Exception;
+    void delete(Long id) throws Exception;
 }

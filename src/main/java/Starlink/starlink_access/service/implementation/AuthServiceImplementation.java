@@ -14,6 +14,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -104,6 +105,15 @@ public class AuthServiceImplementation implements AuthService {
         throw new InvalidTokenException("Invalid refresh token");
     }
 
+    @Override
+    public User getUserAuthenticated() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        User user = userRepository.findByUsername(authentication.getName()).orElseThrow(
+                () -> new RuntimeException("Unauthorize, user not found")
+        );
+        return user;
+    }
+
     private List<String> validatePassword(String password) {
         List<String> errors = new ArrayList<>();
 
@@ -125,4 +135,6 @@ public class AuthServiceImplementation implements AuthService {
 
         return errors;
     }
+
+
 }

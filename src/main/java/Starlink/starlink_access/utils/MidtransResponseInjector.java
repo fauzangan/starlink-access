@@ -10,5 +10,6 @@ public class MidtransResponseInjector {
         transaction.setBank_transfer(midtransResponse.getVaNumbers().get(0).getBank());
         transaction.setPayment_type(midtransResponse.getPaymentType());
         transaction.setTransaction_details(midtransResponse.getOrderId());
+        transaction.setExpired_date(DateFormatter.convertStringDateTimeToLong(midtransResponse.getExpiryTime()));
     }
 }

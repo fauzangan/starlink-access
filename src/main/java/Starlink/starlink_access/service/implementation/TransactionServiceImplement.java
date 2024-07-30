@@ -5,10 +5,8 @@ import Starlink.starlink_access.DTO.TransactionDetailDTO;
 import Starlink.starlink_access.mapper.TransactionMapper;
 import Starlink.starlink_access.model.ProductList;
 import Starlink.starlink_access.model.Transaction;
-import Starlink.starlink_access.repository.DiscountRepository;
-import Starlink.starlink_access.repository.ProductListRepository;
-import Starlink.starlink_access.repository.TransactionRepository;
-import Starlink.starlink_access.repository.UserRepository;
+import Starlink.starlink_access.repository.*;
+import Starlink.starlink_access.service.AuthService;
 import Starlink.starlink_access.service.MidtransService;
 import Starlink.starlink_access.service.ProductSevice;
 import Starlink.starlink_access.service.TransactionService;
@@ -33,9 +31,9 @@ public class TransactionServiceImplement implements TransactionService {
     private final TransactionRepository transactionRepository;
     private final ProductListServiceImplement productListServiceImplement;
     private final ProductListRepository productListRepository;
-    private final UserRepository userRepository;
+    private final AuthService authService;
     private final MidtransService midtransService;
-    private final ProductSevice productSevice;
+    private final ProductRepository productRepository;
     private final DiscountRepository discountRepository;
 
     @Override
@@ -43,12 +41,8 @@ public class TransactionServiceImplement implements TransactionService {
     public TransactionDTO create(TransactionDTO request) throws Exception{
 
         Transaction transaction = Transaction.builder()
-                .expired_date(DateFormatter.convertStringDateToLong(request.getExpired_date()))
-                .discount(discountRepository.findById(request.getDiscount()).orElseThrow(
-                        () -> new RuntimeException("Error find discount")
-                ))
-                .user(userRepository.findById(request.getUser_id())
-                        .orElseThrow(() -> new RuntimeException("User not found")))
+                .discount(discountRepository.findById(request.getDiscount()).orElse(null))
+                .user(authService.getUserAuthenticated())
                 .build();
 
         Transaction createdTransaction = transactionRepository.save(transaction);
@@ -60,8 +54,17 @@ public class TransactionServiceImplement implements TransactionService {
         for (var productList : request.getProductLists()){
             productList.setTransaction_id(createdTransaction.getId());
             try {
-                productList.setPrice(productSevice.getOne(productList.getProduct_id()).getPrice()*productList.getQuantity());
+                var product = productRepository.findById(productList.getProduct_id()).orElseThrow(() -> new RuntimeException("Product not found"));
+                productList.setPrice(product.getPrice()*productList.getQuantity());
                 temp.add(productListServiceImplement.create(productList));
+
+                product.setStock(product.getStock() - productList.getQuantity());
+                if (product.getStock() < 0){
+                    throw new RuntimeException("Product Quantity should not more than stock avalilable");
+                } else {
+                    productRepository.save(product);
+                }
+
             } catch (Exception e){
                 throw new RuntimeException("Failed creating product list, rollback transaction");
             }
@@ -70,7 +73,9 @@ public class TransactionServiceImplement implements TransactionService {
         }
 
         createdTransaction.setProductLists(temp);
-        totalTransactionPrice = totalTransactionPrice - (totalTransactionPrice*request.getDiscount()/100);
+        if (transaction.getDiscount() != null){
+            totalTransactionPrice = totalTransactionPrice - (totalTransactionPrice * transaction.getDiscount().getPercentage()/100);
+        }
 
         try {
             MidtransRequest midtransRequest = MidtransRequest.builder()
@@ -121,6 +126,7 @@ public class TransactionServiceImplement implements TransactionService {
     }
 
     @Override
+    @Transactional(rollbackOn = Exception.class)
     public TransactionDTO updateTransaction(Long id, String status) {
         MidtransResponse midtransResponse = midtransService.updateTransactionStatus(id, status);
         Transaction transaction = transactionRepository.findById(id).orElseThrow(
@@ -132,6 +138,7 @@ public class TransactionServiceImplement implements TransactionService {
     }
 
     @Override
+    @Transactional(rollbackOn = Exception.class)
     public void delete(Long id) {
         List<ProductList> productLists = productListRepository.findByTransactionId(id);
         for (var productList : productLists){
