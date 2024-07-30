@@ -16,7 +16,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 
-class ProductCategoryControllerTest {
+public class ProductCategoryControllerTest {
 
     @Mock
     private ProductCategorySevice productCategorySevice;
