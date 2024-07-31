@@ -1,6 +1,7 @@
 package Starlink.starlink_access.util.response;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import jakarta.annotation.Nullable;
 import lombok.*;
 
 import java.util.List;

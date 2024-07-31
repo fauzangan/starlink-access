@@ -1,5 +1,6 @@
 package Starlink.starlink_access.util;
 
+import Starlink.starlink_access.DTO.BankTransferDTO;
 import Starlink.starlink_access.model.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -62,6 +63,12 @@ public class Helper {
                 .transaction(createTransaction())
                 .price(90000L)
                 .quantity(1L)
+                .build();
+    }
+
+    public static BankTransferDTO createBankTransferDTO(){
+        return BankTransferDTO.builder()
+                .bank("bca")
                 .build();
     }
 }

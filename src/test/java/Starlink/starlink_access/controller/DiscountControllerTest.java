@@ -18,6 +18,7 @@ import org.springframework.http.ResponseEntity;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.verify;
@@ -110,5 +111,44 @@ public class DiscountControllerTest {
 
         assertEquals(HttpStatus.NO_CONTENT, response.getStatusCode());
         verify(discountService).delete(anyLong());
+    }
+
+    @Test
+    @DisplayName("Test for Delete Discount - ID Not Found")
+    public void givenInvalidId_whenDelete_ThrowException() {
+        doThrow(new RuntimeException("Discount Not Found")).when(discountService).delete(anyLong());
+
+        RuntimeException exception = assertThrows(RuntimeException.class, () -> {
+            discountController.delete(10L);
+        });
+
+        assertEquals("Discount Not Found", exception.getMessage());
+        verify(discountService).delete(10L);
+    }
+
+    @Test
+    @DisplayName("Test for Get Discount By Id - ID Not Found")
+    public void givenInvalidId_whenGetById_ThrowException() {
+        given(discountService.getById(anyLong())).willThrow(new RuntimeException("Discount Not Found"));
+
+        RuntimeException exception = assertThrows(RuntimeException.class, () -> {
+            discountController.getById(20L);
+        });
+
+        assertEquals("Discount Not Found", exception.getMessage());
+        verify(discountService).getById(20L);
+    }
+
+    @Test
+    @DisplayName("Test for Update Discount - ID Not Found")
+    public void givenInvalidId_whenUpdate_ThrowException() {
+        given(discountService.update(anyLong(), any(DiscountDTO.class))).willThrow(new RuntimeException("Discount Not Found"));
+
+        RuntimeException exception = assertThrows(RuntimeException.class, () -> {
+            discountController.update(100L, updatedDTO);
+        });
+
+        assertEquals("Discount Not Found", exception.getMessage());
+        verify(discountService).update(100L, updatedDTO);
     }
 }

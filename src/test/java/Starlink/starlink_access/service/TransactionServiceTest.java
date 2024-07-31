@@ -1,10 +1,11 @@
 package Starlink.starlink_access.service;
 
+import Starlink.starlink_access.DTO.BankTransferDTO;
 import Starlink.starlink_access.DTO.ProductListDTO;
 import Starlink.starlink_access.DTO.TransactionDTO;
 import Starlink.starlink_access.DTO.TransactionDetailDTO;
 import Starlink.starlink_access.mapper.ProductMapper;
-import Starlink.starlink_access.model.Transaction;
+import Starlink.starlink_access.model.*;
 import Starlink.starlink_access.repository.*;
 import Starlink.starlink_access.service.MidtransService;
 import Starlink.starlink_access.service.ProductSevice;
@@ -20,6 +21,7 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -41,14 +43,45 @@ public class TransactionServiceTest {
     @Mock
     private ProductSevice productSevice;
     @Mock
+    private ProductRepository productRepository;
+    @Mock
     private DiscountRepository discountRepository;
+    @Mock
+    private AuthService authService;
+    @Mock
+    private ProductListService productListService;
+
 
     @InjectMocks
     private TransactionServiceImplement transactionService;
 
+    private TransactionDTO transactionDTO;
+    private User user;
+    private Discount discount;
+    private Product product;
+    private ProductListDTO productListDTO;
+
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
+        user = Helper.createUser();
+        discount = Helper.createDiscount();
+        product = Helper.createProduct();
+
+        transactionDTO = new TransactionDTO();
+        transactionDTO.setDiscount(1L);
+        transactionDTO.setPayment_type("bank_transfer");
+
+        BankTransferDTO bankTransferDTO = new BankTransferDTO("BCA");
+//        bankTransferDTO.setBank("bca");
+        transactionDTO.setBank_transfer(bankTransferDTO);
+
+        ProductListDTO productListDTO = new ProductListDTO();
+        productListDTO.setProduct_id(1L);
+        productListDTO.setQuantity(1L);
+
+        transactionDTO.setProductLists(Collections.singletonList(productListDTO));
+
     }
 
     @Test
@@ -77,6 +110,48 @@ public class TransactionServiceTest {
 //        assertNotNull(result);
 //        verify(transactionRepository, times(2)).save(any(Transaction.class));
 //        verify(midtransService).chargeTransaction(any(MidtransRequest.class));
+//
+//        Long userId = 10L;
+//        Long discountId = 5L;
+//        Long productId = 1L;
+//        Long quantity = 2L;
+
+        when(authService.getUserAuthenticated()).thenReturn(user);
+        when(discountRepository.findById(anyLong())).thenReturn(Optional.of(discount));
+        when(productRepository.findById(anyLong())).thenReturn(Optional.of(product));
+        when(transactionRepository.save(any(Transaction.class))).thenAnswer(invocation -> {
+            Transaction transaction = invocation.getArgument(0);
+            transaction.setId(1L);
+            return transaction;
+        });
+
+        when(productListService.create(any(ProductListDTO.class))).thenAnswer(invocation -> {
+            ProductListDTO dto = invocation.getArgument(0);
+            if (dto.getQuantity() > product.getStock()) {
+                throw new RuntimeException("Product quantity exceeds stock");
+            }
+            ProductList productList = ProductList.builder()
+                    .id(1L)
+                    .product(product)
+                    .transaction(Helper.createTransaction())
+                    .price(dto.getQuantity() * product.getPrice())
+                    .quantity(dto.getQuantity())
+                    .build();
+            return productList;
+        });
+
+        MidtransResponse midtransResponse = new MidtransResponse();
+        midtransResponse.setTransactionId("1");
+        midtransResponse.setTransactionStatus("pending");
+        when(midtransService.chargeTransaction(any(MidtransRequest.class))).thenReturn(midtransResponse);
+
+        TransactionDTO result = transactionService.create(transactionDTO);
+
+        assertNotNull(result);
+        assertEquals(1L, result.getId());
+        assertEquals("pending", result.getTransaction_status());
+        verify(transactionRepository, times(2)).save(any(Transaction.class));
+        verify(productRepository).save(any(Product.class));
     }
 
     @Test

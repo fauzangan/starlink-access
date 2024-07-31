@@ -56,7 +56,7 @@ public class DiscountServiceImplementation implements DiscountService {
     @Override
     public void delete(Long id) {
         Discount discount = discountRepository.findById(id)
-                .orElseThrow(()-> new RuntimeException("Discount  Not Found"));
+                .orElseThrow(()-> new RuntimeException("Discount Not Found"));
         discountRepository.delete(discount);
     }
 }

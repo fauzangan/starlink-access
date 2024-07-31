@@ -23,6 +23,7 @@ import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.*;
@@ -129,4 +130,46 @@ public class DiscountServiceTest {
                 .thenReturn(Optional.of(discount));
         assertAll(() -> discountService.delete(1L));
     }
+
+    @Test
+    @DisplayName("Test for Update Discount - ID Not Found")
+    public void givenInvalidId_whenUpdate_ThrowException() {
+        given(discountRepository.findById(any(Long.class))).willReturn(Optional.empty());
+
+        RuntimeException exception = assertThrows(RuntimeException.class, () -> {
+            discountService.update(100L, updatedDTO);
+        });
+
+        assertThat(exception.getMessage()).isEqualTo("Discount Not Found");
+        verify(discountRepository).findById(100L);
+        verify(discountRepository, never()).save(any(Discount.class));
+    }
+
+    @Test
+    @DisplayName("Test for Delete Discount - ID Not Found")
+    public void givenInvalidId_whenDelete_ThrowException() {
+        given(discountRepository.findById(any(Long.class))).willReturn(Optional.empty());
+
+        RuntimeException exception = assertThrows(RuntimeException.class, () -> {
+            discountService.delete(10L);
+        });
+
+        assertThat(exception.getMessage()).isEqualTo("Discount Not Found");
+        verify(discountRepository).findById(10L);
+        verify(discountRepository, never()).delete(any(Discount.class));
+    }
+
+    @Test
+    @DisplayName("Test for Get One Discount - ID Not Found")
+    public void givenInvalidId_whenGetById_ThrowException() {
+        given(discountRepository.findById(any(Long.class))).willReturn(Optional.empty());
+
+        RuntimeException exception = assertThrows(RuntimeException.class, () -> {
+            discountService.getById(20L);
+        });
+
+        assertThat(exception.getMessage()).isEqualTo("Discount Not Found");
+        verify(discountRepository).findById(20L);
+    }
+
 }
