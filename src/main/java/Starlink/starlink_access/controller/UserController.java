@@ -1,6 +1,7 @@
 package Starlink.starlink_access.controller;
 
 import Starlink.starlink_access.DTO.UserDTO;
+import Starlink.starlink_access.exception.ResourceNotFoundException;
 import Starlink.starlink_access.repository.UserRepository;
 import Starlink.starlink_access.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -50,6 +51,9 @@ public class UserController {
     }
 
     private Long getUserIdFromAuthentication(Authentication authentication) {
-        return userRepository.findByUsername(authentication.getName()).get().getId();
+        String username = authentication.getName();
+        return userRepository.findByUsername(username)
+                .orElseThrow(() -> new ResourceNotFoundException("User not found with username: " + username))
+                .getId();
     }
 }
