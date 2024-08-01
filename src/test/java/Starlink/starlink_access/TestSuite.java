@@ -14,7 +14,10 @@ import org.junit.platform.suite.api.Suite;
         ProductServiceTest.class,
         ProductListServiceTest.class,
         TransactionServiceTest.class,
-        UserServiceTest.class
+        UserServiceTest.class,
+        UserControllerTest.class,
+        AuthServiceTest.class,
+        AuthControllerTest.class
 
 })
 public class TestSuite {
