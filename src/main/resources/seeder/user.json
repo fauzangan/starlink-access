@@ -28,10 +28,10 @@
     "email": "email4@exmaple.com"
   },
   {
-    "name": "User 5",
-    "username": "user5",
-    "password": "pass5",
-    "role": "USER",
-    "email": "email5@exmaple.com"
+    "name": "Admin",
+    "username": "admin",
+    "password": "$2a$10$MWFA6OXeemyaYkIrffsDZeR9oChAts3qOH434hdCma7HUj27lNg0O",
+    "role": "ADMIN",
+    "email": "admin@exmaple.com"
   }
 ]
