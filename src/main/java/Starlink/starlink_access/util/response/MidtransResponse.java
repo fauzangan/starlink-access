@@ -52,6 +52,7 @@ public class MidtransResponse {
 
     @Setter
     @Getter
+    @AllArgsConstructor
     public static class VaNumber {
         @JsonProperty("bank")
         private String bank;

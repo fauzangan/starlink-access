@@ -20,9 +20,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Optional;
+import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
@@ -59,10 +57,20 @@ public class TransactionServiceTest {
     private User user;
     private Discount discount;
     private Product product;
-    private ProductListDTO productListDTO;
+    private List<ProductListDTO> productListDTO;
+    private TransactionDTO transactionDTORequest;
+    private List<MidtransResponse.VaNumber> vaNumbers;
+    private TransactionDetailDTO transactionDetailDTO;
+    private BankTransferDTO bankTransferDTO;
 
     @BeforeEach
     void setUp() {
+
+        List<MidtransResponse.VaNumber> vaNumbers = Arrays.asList(
+                new MidtransResponse.VaNumber("bca", "85811354023"),
+                new MidtransResponse.VaNumber("bni", "1234567890")
+        );
+
         MockitoAnnotations.openMocks(this);
         user = Helper.createUser();
         discount = Helper.createDiscount();
@@ -72,15 +80,48 @@ public class TransactionServiceTest {
         transactionDTO.setDiscount(1L);
         transactionDTO.setPayment_type("bank_transfer");
 
-        BankTransferDTO bankTransferDTO = new BankTransferDTO("BCA");
-//        bankTransferDTO.setBank("bca");
-        transactionDTO.setBank_transfer(bankTransferDTO);
+        List<ProductListDTO> productList = new ArrayList<>();
 
-        ProductListDTO productListDTO = new ProductListDTO();
-        productListDTO.setProduct_id(1L);
-        productListDTO.setQuantity(1L);
+        ProductListDTO product1 = ProductListDTO.builder()
+                .price(5000L)
+                .quantity(3L)
+                .product_id(2L)
+                .transaction_id(1L)
+                .build();
 
-        transactionDTO.setProductLists(Collections.singletonList(productListDTO));
+        ProductListDTO product2 = ProductListDTO.builder()
+                .price(10000L)
+                .quantity(1L)
+                .product_id(3L)
+                .transaction_id(1L)
+                .build();
+
+        productList.add(product1);
+        productList.add(product2);
+
+        transactionDetailDTO = transactionDetailDTO.builder()
+                .order_id("ORDER123")
+                .gross_amount(1000L)
+                .build();
+
+        bankTransferDTO = bankTransferDTO.builder()
+                .bank("Bank Negara Indonesia")
+                .build();
+
+        transactionDTORequest = TransactionDTO.builder()
+                .quantity(5L)
+                .total_price(1000L)
+                .expired_date("2024-08-01")
+                .transaction_status("PENDING")
+                .user_id(1L)
+                .productLists(productList)
+                .discount(10L)
+                .payment_type("credit_card")
+                .transaction_details(transactionDetailDTO)
+                .bank_transfer(bankTransferDTO)
+                .virtualNumber("123456789")
+                .build();
+//        transactionDTO.setProductLists(Collections.singletonList(productListDTO));
 
     }
 
@@ -141,15 +182,30 @@ public class TransactionServiceTest {
         });
 
         MidtransResponse midtransResponse = new MidtransResponse();
-        midtransResponse.setTransactionId("1");
+        midtransResponse.setTransactionId("fc44ff20-851f-4943-b545-da2db887cec9");
+        midtransResponse.setStatusCode("201");
+        midtransResponse.setStatusMessage("Success, Bank Transfer transaction is created");
+        midtransResponse.setOrderId("order-102");
+        midtransResponse.setGrossAmount("44000.00");
+        midtransResponse.setCurrency("IDR");
+        midtransResponse.setPaymentType("bank_transfer");
+        midtransResponse.setTransactionTime("2024-07-31 21:48:41");
         midtransResponse.setTransactionStatus("pending");
+        midtransResponse.setFraudStatus("accept");
+//        List<MidtransResponse.VaNumber> vaNumbers = new ArrayList<>("bca", "85811354023");
+
+        // Menginisialisasi objek MidtransResponse.VaNumber dengan list tersebut
+        midtransResponse.setVaNumbers(vaNumbers);
+//        midtransResponse.setVaNumbers(Collections.singletonList(vaNumber));
+        midtransResponse.setExpiryTime("2024-08-01 21:48:41");
+//        when(transactionService.create(any(TransactionDTO.class))).thenReturn(null);
         when(midtransService.chargeTransaction(any(MidtransRequest.class))).thenReturn(midtransResponse);
 
-        TransactionDTO result = transactionService.create(transactionDTO);
+        TransactionDTO result = transactionService.create(transactionDTORequest);
 
         assertNotNull(result);
-        assertEquals(1L, result.getId());
-        assertEquals("pending", result.getTransaction_status());
+        assertEquals(1L, result.getDiscount());
+        assertEquals("pending", transactionDTO.getTransaction_status());
         verify(transactionRepository, times(2)).save(any(Transaction.class));
         verify(productRepository).save(any(Product.class));
     }
