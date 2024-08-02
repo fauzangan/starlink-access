@@ -39,8 +39,7 @@ public class ProductController {
     public ResponseEntity<?> create(@Valid @RequestBody OnlyForProductDTO request) {
         try {
             Product createdProduct = productSevice.create(request);
-            return ResponseEntity.status(HttpStatus.CREATED)
-                    .body(Response.renderJSON(createdProduct, "Product created", HttpStatus.CREATED));
+            return new ResponseEntity(createdProduct, HttpStatus.CREATED);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body(Response.renderJSON(null, e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR));
